@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class ArrayExtremum {
+public class Rounding {
 	public static void main(String[] args) {
 		Scanner dataFile = null;
 		
@@ -14,25 +14,23 @@ public class ArrayExtremum {
 		}
 
 		PrintWriter writer = null;
-		int[] array = new int[300];
 		try{
 			writer = new PrintWriter("result.txt", "UTF-8");
-			for (int i=0; i <= 299; i++){
-				array[i] = dataFile.nextInt();
-			}
+			int iterations = dataFile.nextInt();
+			for (int i=1; i <= iterations; i++){
+				int first = dataFile.nextInt();
+				int second = dataFile.nextInt();
+				
+				double buffer = (double)first/(double)second;
+				int rounded = 0;
+				if((buffer-(int)buffer)>= 0.5 || ((buffer < 0) && (buffer-(int)buffer)<= 0.5)){
+					rounded = (int)Math.ceil(buffer);
+				} else {
+					rounded = (int)Math.floor(buffer);
+				}
+				writer.print(rounded+" ");
 
-			//max&min
-			int bufferMIN = array[0];
-			int bufferMAX = array[0];
-			for (int i=0; i <= 299; i++){
-				if(array[i] > bufferMAX){
-					bufferMAX = array[i];
-				} 
-				if(array[i] < bufferMIN){
-					bufferMIN = array[i];
-				} 
 			}
-			writer.print(bufferMAX+" "+bufferMIN);
 		}catch(IOException e){
 			System.exit(0);
 		} finally {	
