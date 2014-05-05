@@ -1,8 +1,9 @@
 import java.util.*;
 import java.io.*;
+import java.lang.*;
 
 
-public class DiceRolling {
+public class WSD {
 	public static void main(String[] args) {
 		Scanner dataFile = null;
 		
@@ -19,16 +20,16 @@ public class DiceRolling {
 			writer = new PrintWriter("result.txt", "UTF-8");
 			int iterations = dataFile.nextInt();
 			for (int i=1; i <= iterations; i++){
-				String buffer = dataFile.next().trim();
-				double value = Double.parseDouble(buffer);
-				//multiplying by desired number of points on dice
-				//Whole algorithm: FLOOR(x *(B - A) + A)
-				value = (value*6);
-				//Decimal value must be FLOORED (not rounded) to get desired integer value
-				int rounded = (int)value;
-				rounded++;
-				writer.print(rounded+" ");
-			
+				String number = dataFile.next().trim();
+				int weightenedSum = 0;
+				int position = 1;
+					for (int j=0; j < number.length(); j++){
+						Character digitAsString = (char)(number.charAt(j));
+						int digit = Character.getNumericValue(digitAsString);
+						weightenedSum = weightenedSum + (digit * position);
+						position++;
+					}
+				writer.print(weightenedSum + " ");
 			}
 		}catch(IOException e){
 			System.exit(0);

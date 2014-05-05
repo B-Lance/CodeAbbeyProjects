@@ -1,8 +1,8 @@
 import java.util.*;
 import java.io.*;
 
+public class Average {
 
-public class DiceRolling {
 	public static void main(String[] args) {
 		Scanner dataFile = null;
 		
@@ -19,16 +19,25 @@ public class DiceRolling {
 			writer = new PrintWriter("result.txt", "UTF-8");
 			int iterations = dataFile.nextInt();
 			for (int i=1; i <= iterations; i++){
-				String buffer = dataFile.next().trim();
-				double value = Double.parseDouble(buffer);
-				//multiplying by desired number of points on dice
-				//Whole algorithm: FLOOR(x *(B - A) + A)
-				value = (value*6);
-				//Decimal value must be FLOORED (not rounded) to get desired integer value
-				int rounded = (int)value;
-				rounded++;
+				int sum = 0;
+				int counter = 0;
+				int number = dataFile.nextInt();
+				while(number != 0){
+					sum += number;
+					counter++;
+					number = dataFile.nextInt();
+				}
+				//System.out.println(counter);
+				double average = (double)sum/(double)counter;
+				int rounded = 0;
+				if((average-(int)average)>= 0.5 || ((average< 0) && (average-(int)average)<= 0.5)){
+					rounded = (int)Math.ceil(average);
+				} else {
+					rounded = (int)Math.floor(average);
+				}
+				//System.out.println(rounded);
 				writer.print(rounded+" ");
-			
+
 			}
 		}catch(IOException e){
 			System.exit(0);

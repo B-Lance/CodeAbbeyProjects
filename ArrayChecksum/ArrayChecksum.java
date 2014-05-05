@@ -1,9 +1,11 @@
 import java.util.*;
 import java.io.*;
 
-
-public class DiceRolling {
+public class ArrayChecksum {
 	public static void main(String[] args) {
+		final int SEED = 113;
+		final int LIMIT = 10000007;
+		
 		Scanner dataFile = null;
 		
 		try{
@@ -18,19 +20,18 @@ public class DiceRolling {
 		try{
 			writer = new PrintWriter("result.txt", "UTF-8");
 			int iterations = dataFile.nextInt();
-			for (int i=1; i <= iterations; i++){
-				String buffer = dataFile.next().trim();
-				double value = Double.parseDouble(buffer);
-				//multiplying by desired number of points on dice
-				//Whole algorithm: FLOOR(x *(B - A) + A)
-				value = (value*6);
-				//Decimal value must be FLOORED (not rounded) to get desired integer value
-				int rounded = (int)value;
-				rounded++;
-				writer.print(rounded+" ");
-			
+			long[] array = new long[iterations+1];
+			for (int i=0; i < iterations; i++){
+				array[i] = dataFile.nextInt();
 			}
-		}catch(IOException e){
+			long result = 0;
+			for (int i=0; i < iterations; i++){
+				result = (result + array[i]) * SEED;
+				result = result % LIMIT;
+			}
+			writer.print(result);
+
+		} catch(IOException e) {
 			System.exit(0);
 		} finally {	
 			writer.close();
